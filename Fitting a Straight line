@@ -1,0 +1,32 @@
+#Fitting a straight line to given data
+
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+
+x=np.array([1,2,3,4,6,8],dtype=float)
+
+y=np.array([2.4,3,3.6,4,5,6],dtype=float)
+
+s_x=0.0
+s_y=0.0
+s_xy=0.0
+s_x2=0.0
+
+for i in range(len(x)):
+  s_x+=x[i]
+  s_y+=y[i]
+  s_xy+=x[i]*y[i]
+  s_x2+=x[i]*x[i]
+print(s_x,s_y,s_xy,s_x2)  
+
+a=((s_x2*s_y)-(s_x*s_xy))/((len(x)*s_x2)-(s_x**2))
+b=((len(x)*s_xy)-(s_x*s_y))/((len(x)*s_x2)-(s_x**2))
+
+print(a,b)
+
+
+
+plt.plot(x,y,"o")
+plt.plot(x,b*x+a)
+plt.show
