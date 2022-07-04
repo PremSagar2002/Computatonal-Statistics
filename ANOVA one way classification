@@ -1,0 +1,44 @@
+import numpy as np
+import pandas as pd
+import scipy.stats as s
+tn=int(input())
+n1=list(map(int,input().split()))
+n2=list(map(int,input().split()))
+n3=list(map(int,input().split()))
+a=np.array(n1)
+b=np.array(n2)
+c=np.array(n3)
+tia=sum(a)
+tib=sum(b)
+tic=sum(c)
+ti=tia+tib+tic
+sti=int((((tia)**2)/len(a))+(((tib)**2)/len(b))+(((tic)**2)/len(c)))
+d=n1+n2+n3
+rss=0
+for i in range(len(d)):
+    rss=rss+((d[i])**2)
+cf=((ti)**2)/len(d)
+sst=rss-cf
+sstr=sti-cf
+sse=sst-sstr
+t=pd.read_excel("C:\\Users\\exam2\\Desktop\\anova.xlsx")
+df=pd.DataFrame(t)
+
+df["source of variation"]=["treatments","errors","total"]
+df["sum of squares"]=[sstr,sse,sstr+sse]
+x=(tn-1)
+y=(len(d)-tn)
+df["degrees of freedom"]=[x,y,len(d)-1]
+x1=sstr/x
+y1=sse/y
+df["mean sum of square"]=[x1,y1," "]
+f=x1/y1
+df["varience ratio"]=[f,"  "," "]
+if(f<1):
+    f=1/f
+tv=s.f.ppf(1-0.05,x,y)
+if(tv<f):
+    print("accept")
+else:
+    print("reject")
+s=df.to_excel("C:\\Users\\exam2\\Desktop\\anova.xlsx",index=False)
