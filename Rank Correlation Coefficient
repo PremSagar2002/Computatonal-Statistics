@@ -1,0 +1,106 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@PremSagar2002 
+keerthipanidem02
+/
+computational-statistics
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+computational-statistics/rank correlation
+@keerthipanidem02
+keerthipanidem02 Update rank correlation
+Latest commit a198d14 3 days ago
+ History
+ 1 contributor
+63 lines (58 sloc)  1.33 KB
+
+import pandas as pd
+def rankco(df):
+    x=df.x
+    y=df.y
+    r1={}
+    x1=sorted(x,reverse=True)
+    y1=sorted(y,reverse=True)
+    r=1
+    n=len(x)
+#ranks for x
+    for i in range(len(x1)):
+        if x1[i] in r1.keys():
+            r1[x1[i]]=(r1[x1[i]]+r)
+        else:
+            r1[x1[i]]=r
+        r+=1
+    for i in r1.keys():
+            r1[i]=(r1[i])/(x1.count(i))
+
+#ranks for y         
+    r=1
+    r2={}
+    for i in range(len(y1)):
+        if y1[i] in r2.keys():
+            r2[y1[i]]=(r2[y1[i]]+r)
+           
+           
+        else:
+            r2[y1[i]]=r
+        r+=1
+    for i in r2.keys():
+            r2[i]=(r2[i])/(y1.count(i))
+    df['ranks_of_x']=[r1[i] for i in x]
+    df['ranks_of_y']=[r2[i] for i in y]
+    df['diff']=df['ranks_of_x']-df['ranks_of_y']
+    df['diffsq']=df['diff']**2
+    sigma_d=sum(df['diffsq'])
+#printing dataframe
+    print(df)
+    l={}
+    cf=0
+    x=list(x)
+    y=list(y)
+    for i in x:
+        if x.count(i)>0:
+            l[i]=x.count(i)
+    k={}
+    for j in y:
+        if y.count(j)>0:
+            k[j]=y.count(j)
+    for i in l.values():
+        cf=cf+i*(i**2-1)/12
+    for j in k.values():
+        cf=cf+j*(j**2-1)/12
+    d=6*(sigma_d+cf)/(n*(n**2-1))
+    r1=1-d
+    print(r1)
+           
+           
+x=list(map(int,input().split()))
+y=list(map(int,input().split()))  
+df=pd.DataFrame({'x':x,"y":y})
+rankco(df)
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+You have no unread notifications
