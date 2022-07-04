@@ -1,0 +1,41 @@
+#Finding the corelation of the given data
+def a_mean(x):
+  a_sum=0.0
+  a_count=0
+  for i in x:
+     a_sum+=i
+     a_count+=1
+  m=(a_sum/a_count)
+  return m
+def a_std(x,m,c):
+  s=0.0
+  for i in x:
+    s+=(i-m)**2
+  var=s/c
+  std=(var**0.5)
+  return std
+
+def cov(x,y,m_x,m_y,c):
+  s=0.0
+  for i in range(c):
+    s+=(x[i]-m_x)*(y[i]-m_y)
+  cov_var=(s)/c
+  return (cov_var) 
+
+     
+
+x=np.array([3,7,4,2,0,4,1,2],dtype=float)
+x
+y=np.array([11,18,9,4,7,6,3,8],dtype=float)
+y
+
+mx=a_mean(x)
+my=a_mean(y)
+sx=a_std(x,mx,len(x))
+sy=a_std(y,my,len(y))
+cov=cov(x,y,mx,my,len(x))
+
+print(mx,my,sx,sy,cov)
+
+r=cov/(sx*sy)
+print(r)
