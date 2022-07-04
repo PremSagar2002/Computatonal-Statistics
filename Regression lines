@@ -1,0 +1,55 @@
+#Finding the regression lines in python
+def a_mean(x):
+  a_sum=0.0
+  a_count=0
+  for i in x:
+     a_sum+=i
+     a_count+=1
+  m=(a_sum/a_count)
+  return m
+def a_std(x,m,c):
+  s=0.0
+  for i in x:
+    s+=(i-m)**2
+  var=s/c
+  std=(var**0.5)
+  return std
+
+def cov(x,y,m_x,m_y,c):
+  s=0.0
+  for i in range(c):
+    s+=(x[i]-m_x)*(y[i]-m_y)
+  cov_var=(s)/c
+  return (cov_var) 
+
+  cov_var=(x_s*y_s)/c
+  return (cov_var)       
+
+x=np.array([16,21,26,23,28,24,17,22,21],dtype=float)
+x
+y=np.array([33,38,50,39,52,47,35,43,41],dtype=float)
+y
+
+mx=a_mean(x)
+my=a_mean(y)
+sx=a_std(x,mx,len(x))
+sy=a_std(y,my,len(y))
+cov=cov(x,y,mx,my,len(x))
+
+print(mx,my,sx,sy,cov)
+
+r=cov/(sx*sy)
+print(r)
+
+bxy=(r*sx)/sy
+byx=(r*sy)/sx
+print(bxy,byx)
+
+plt.plot(x,y,"o")
+print("Regression line x on y")
+plt.plot(x,byx*(x-mx)+my)
+
+print("Regrseeion line y on x")
+plt.plot(y,bxy*(y-my)+mx)
+
+plt.show()
